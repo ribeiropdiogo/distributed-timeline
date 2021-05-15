@@ -6,14 +6,20 @@ from interface import interface
 def task(server, loop, username, queue):
     interface.printMenu()
     while True:
-        msg = yield from queue.get()
-        if msg == 'exit\n':
+        input = yield from queue.get()
+
+        if input == 'exit\n':
             break
 
-        os.system('cls' if os.name == 'nt' else 'clear')
+        parseOption(input)
+
+        #para limpar o ecrã dps
+        #os.system('cls' if os.name == 'nt' else 'clear')
         interface.printMenu()
     loop.call_soon_threadsafe(loop.stop)
 
-def cancel_task():                          
-    for task in asyncio.all_tasks():
-        task.cancel()                   
+def parseOption(option):                          
+    if(option == '1\n'):
+        print("opção 1 ")
+    elif(option == '2\n'):  
+        print("opção 2 ")      

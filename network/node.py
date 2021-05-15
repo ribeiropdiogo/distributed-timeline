@@ -4,7 +4,7 @@ import asyncio
 
 from kademlia.network import Server
 
-DEBUG = True
+DEBUG = False
 BOOTSTRAP_NODE = 8468
 
 def start_node(args):

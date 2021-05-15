@@ -1,5 +1,11 @@
 # Distributed Timeline
 
+## Installing Dependencies
+Run:
+```
+pip3 install -r requirements.txt
+```
+
 ## Starting a Node
 
 To run a bootstrap node:

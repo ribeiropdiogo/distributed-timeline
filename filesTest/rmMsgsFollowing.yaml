@@ -1,0 +1,35 @@
+- identity: nodex
+- username: username@mail.com
+- timeline:
+  - content: distributed systems in large scale
+    id: 1
+  - content: kademlia is awesome
+    id: 2
+  - content: we are going to get a juicy 20
+    id: 3
+- following:
+  - identity: node1
+    ip: 0.0.0.0
+    port: 10001
+    timeline:
+    - content: Message number 1
+      id: 1
+    - content: Message number 2
+      id: 2
+    track_timeline: 2
+    username: someone@mail.com
+  - identity: node2
+    ip: 0.0.0.0
+    port: 10002
+    track_timeline: 0
+    username: nobody@mail.com
+  - identity: node10
+    ip: 0.0.0.0
+    port: 11112
+    timeline:
+    - content: ora viva 3
+      id: 3
+    - content: ora viva 4
+      id: 4
+    track_timeline: 4
+    username: someNode@mail.com

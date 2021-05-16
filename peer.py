@@ -5,10 +5,11 @@ import asyncio
 import sys
 import signal
 from network import node, async_tasks
-from storage import local_storage
+from storage import local_storage, update_storage
 from threading import Thread
 
 #### Peer Global Variables ####
+identity = ""
 username  = ""
 timeline  = []
 following = []
@@ -37,9 +38,11 @@ def main():
     (server,loop) = node.start_node(args)
 
     # read the data from the local storage
-    (timeline, following) = local_storage.read_data('database/example.yaml')
-    if (timeline,following) != ([], []):
+    (identity, username, timeline, following) = local_storage.read_data('database/content.yaml')
+    if (identity, username, timeline,following) != ([], []):
         print("> The imported data was:")
+        print("\t- Identity: " + str(identity))
+        print("\t- Username: " + str(username))
         print("\t- Timeline: " + str(timeline))
         print("\t- Following: " + str(following) + "\n")
     else:
@@ -61,7 +64,7 @@ def main():
         pass
     finally:                   
         print("\n> Peer is closed!")
-        local_storage.save_data(timeline, following, username) # save all info about this peer in the local storage
+        local_storage.save_data(identity, username, timeline, following, username) # save all info about this peer in the local storage
         print('\n> All data was saved!')
         server.stop()
         loop.close()

@@ -21,15 +21,19 @@ def __importData(path_to_file):
 def read_data(path_to_file):
     data = __importData(path_to_file)
     if data:
-        return (data['timeline'], data['following'])
+        return (data['identity'], data['username'], data['timeline'], data['following'])
     else:   
         return ([], [])
 
 '''
     save the data in a peer to the local database
 '''
-def save_data(timeline, following, output_file_name):
-    dict_file = [{'timeline': timeline}, {'following': following}]
-    with open(DATABASE_PATH + output_file_name + '.yaml', 'w') as file:
+def save_data(identity, username, timeline, following, output_file_name):
+    save_data_in_path(identity, username, timeline, following, DATABASE_PATH, output_file_name)
+
+def save_data_in_path(identity, username, timeline, following, path, output_file_name):
+    dict_file = [{'identity': identity}, {'username': username}, 
+                {'timeline': timeline}, {'following': following}]
+    with open(path + output_file_name + '.yaml', 'w') as file:
         yaml.dump(dict_file, file, sort_keys=True)
     file.close() 

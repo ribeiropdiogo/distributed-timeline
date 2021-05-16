@@ -12,14 +12,19 @@ def task(server, loop, username, queue):
             break
 
         parseOption(input)
-
-        #para limpar o ecrã dps
-        #os.system('cls' if os.name == 'nt' else 'clear')
         interface.printMenu()
     loop.call_soon_threadsafe(loop.stop)
 
 def parseOption(option):                          
     if(option == '1\n'):
-        print("opção 1 ")
+        os.system('cls' if os.name == 'nt' else 'clear')
+        interface.followUser()
+        # Follow User Function
     elif(option == '2\n'):  
-        print("opção 2 ")      
+        os.system('cls' if os.name == 'nt' else 'clear')
+        interface.publishContent() 
+        # Publish Content Function
+    elif(option == '3\n'):  
+        os.system('cls' if os.name == 'nt' else 'clear')
+        interface.feedHeader() 
+        # Show Feed Function

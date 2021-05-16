@@ -1,0 +1,30 @@
+identity: "nodex"
+username: "username@mail.com"
+
+# local timeline containing a list of messages
+timeline:
+  - id: 1
+    content: "distributed systems in large scale"
+  - id: 2
+    content: "kademlia is awesome"
+  - id: 3
+    content: "we are going to get a juicy 20"
+
+# info about the nodes we are following
+following:
+  - identity: "node1"
+    username: "someone@mail.com"
+    ip: 0.0.0.0
+    port: 10001
+    track_timeline: 2
+    timeline:
+      - id: 1
+        content: "Message number 1"
+      - id: 2 
+        content: "Message number 2"
+  - identity: "node2"
+    username: "nobody@mail.com"
+    ip: 0.0.0.0
+    port: 10002
+    track_timeline: 0
+    

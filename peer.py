@@ -4,7 +4,7 @@ import logging
 import asyncio
 import sys
 import signal
-from network import node, async_tasks, communication
+from network import node, async_tasks, communication, dhtUserInfo
 from storage import local_storage
 from threading import Thread
 
@@ -13,6 +13,7 @@ username  = ""
 timeline  = []
 following = []
 inputs = asyncio.Queue()
+tcp_port = 1234
 ###############################
 
 def handle_user_input():
@@ -25,15 +26,15 @@ def parse_arguments():
     # Optional arguments
     parser.add_argument("-i", "--ip", help="IP address of existing node", type=str, default=None)
     parser.add_argument("-p", "--port", help="port number of existing node", type=int, default=None)
-    parser.add_argument("-u", "--username", help="username of node", type=str, default="default")
+    parser.add_argument("-u", "--username", help="username of node", type=str, default="bootstrap")
 
     return parser.parse_args()
 
-async def insertUserDHT(server):
-    exists = await server.get(str(username))
+async def insertUserDHT(server,username,port):
+    exists = await server.get(username)
     if exists is None:
-        user_info = "uelele"
-        await server.set(str(username), user_info)
+        user_info = dhtUserInfo.create(username,port)
+        await server.set(username, user_info)
     else:
         print("> User present in DHT")
 
@@ -61,13 +62,14 @@ def main():
     # User Input Handling
     loop.add_reader(sys.stdin, handle_user_input)
 
-    if username != "default":
+    if username != "bootstrap":
         # Initialize User in DHT
-        loop.run_until_complete(insertUserDHT(server))
+        loop.run_until_complete(insertUserDHT(server,username,tcp_port))
 
 
     # Build CLI Menu for user to interact
-    task = asyncio.run_coroutine_threadsafe(async_tasks.task(server, loop, username, timeline, following,inputs), loop) 
+    if username != "bootstrap":
+        task = asyncio.run_coroutine_threadsafe(async_tasks.task(server, loop, username, tcp_port, timeline, following,inputs), loop) 
     
     try:
         loop.run_forever()

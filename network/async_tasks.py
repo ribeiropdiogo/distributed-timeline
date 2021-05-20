@@ -4,7 +4,7 @@ from interface import interface
 from network import communication
 
 @asyncio.coroutine
-def task(server, loop, username, timeline, following, queue):
+def task(server, loop, username, tcp_port, timeline, following, queue):
     interface.printMenu()
     while True:
         input = yield from queue.get()
@@ -18,8 +18,8 @@ def task(server, loop, username, timeline, following, queue):
             # Get User To Follow
             input = yield from queue.get()
             # Follow User Function
-            loop.run_until_complete(communication.follow_user(server,username,input))
-            loop.run_until_complete(communication.get_timeline(server,username,input))
+            asyncio.create_task(communication.follow_user(server,username,tcp_port,input))
+            #loop.run_until_complete(communication.get_timeline(server,username,input))
         elif(input == '2'): 
             os.system('cls' if os.name == 'nt' else 'clear')
             interface.publishContent() 
@@ -33,7 +33,6 @@ def task(server, loop, username, timeline, following, queue):
             interface.feedHeader() 
             # Show Feed Function
 
-        interface.printMenu()
     loop.call_soon_threadsafe(loop.stop)
         
 def get_followed_timelines(server,username,following,loop):
@@ -41,4 +40,3 @@ def get_followed_timelines(server,username,following,loop):
     for user in following:
         print(user)
         #loop.run_until_complete(communication.get_timeline(server,username,user))
-

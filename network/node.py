@@ -25,8 +25,8 @@ def start_node(args):
         loop.set_debug(True)
 
     if args.ip and args.port:
-        loop.run_until_complete(server.listen(int(args.port)))
-        bootstrap_node = (args.ip, BOOTSTRAP_NODE)
+        loop.run_until_complete(server.listen(args.port))
+        bootstrap_node = ('127.0.0.1', BOOTSTRAP_NODE)
         loop.run_until_complete(server.bootstrap([bootstrap_node]))
     else:
         loop.run_until_complete(server.listen(BOOTSTRAP_NODE))

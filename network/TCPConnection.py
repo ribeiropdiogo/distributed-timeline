@@ -53,8 +53,9 @@ def serve(connection, address, server, username):
         connection.close()
 
 # Message Format:
-# set USERNAME CONTENT
-# get USERNAME NUMBER_OF_MESSAGES
+# set USERNAME CONTENT (guarda localmente e caso exceda o limite, apaga as mais antigas) (prov. n vamos precisar disto, so do broadcast)
+# get USERNAME NUMBER_OF_MESSAGES (devolve as n ultimas msgs)
+# broadcast USERNAME CONTENT (envia a mais nodos, guarda localmente e caso exceda o limite, apaga as mais antigas)
 
 def parse(data, server, username):
     fragments = data.split(" ",2)

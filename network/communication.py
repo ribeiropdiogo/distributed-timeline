@@ -2,6 +2,8 @@ from interface import interface
 import json
 import math
 import random
+import ntplib
+from datetime import datetime, timezone
 
 DEBUG = True
 
@@ -30,6 +32,13 @@ async def follow_user(server,followingUser,tcp_connection,followedUser):
     interface.printMenu()
 
 async def publish(server,username,content,tcp_connection):
+    # Get Time from external source
+    c = ntplib.NTPClient()
+    response = c.request('pt.pool.ntp.org', version=3)
+    response.offset
+    time = datetime.fromtimestamp(response.tx_time, timezone.utc)
+    print(time)
+
     # Save to local timeline
     # ...
 

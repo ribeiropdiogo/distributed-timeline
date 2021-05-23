@@ -6,9 +6,6 @@
   - content: we are going to get a juicy 20
     id: 3
 - following:
-  - identity: node1
-    ip: 0.0.0.0
-    port: 10001
-  - identity: node2
-    ip: 0.0.0.0
-    port: 10002
+  - username: node1
+  - username: node2
+  

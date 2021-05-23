@@ -17,3 +17,8 @@ To run a normal node:
 ```
 python3 peer.py -i 0.0.0.0 -p PORT
 ```
+
+To run tests:
+```
+./run-tests.sh
+```

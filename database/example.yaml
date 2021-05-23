@@ -2,16 +2,17 @@
 timeline:
   - id: 1
     content: "distributed systems in large scale"
+    timestamp: 1378761833768
   - id: 2
     content: "kadmlia is awesome"
+    timestamp: 1378761833789
   - id: 3
     content: "we are going to get a juicy 20"
+    timestamp: 1478761833789
+
 
 # info about the nodes we are following
 following:
-  - identity: "node1"
-    ip: 0.0.0.0
-    port: 10001
-  - identity: "node2"
-    ip: 0.0.0.0
-    port: 10002
+  - username: "node1"
+  - username: "node2"
+   

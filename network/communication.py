@@ -36,7 +36,8 @@ async def publish(server,username,content,tcp_connection):
     c = ntplib.NTPClient()
     response = c.request('pt.pool.ntp.org', version=3)
     response.offset
-    print(datetime.fromtimestamp(response.tx_time, timezone.utc))
+    time = datetime.fromtimestamp(response.tx_time, timezone.utc)
+    print(time)
 
     # Save to local timeline
     # ...

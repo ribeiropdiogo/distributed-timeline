@@ -15,5 +15,5 @@ python3 peer.py
 
 To run a normal node:
 ```
-python3 peer.py -i 0.0.0.0 -p PORT
+python3 peer.py -i 0.0.0.0 -p PORT -tcp PORT
 ```

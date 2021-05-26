@@ -1,2 +1,3 @@
 kademlia
 pyyaml
+ntplib

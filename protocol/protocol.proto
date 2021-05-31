@@ -1,0 +1,27 @@
+syntax = "proto2";
+
+package protocol;
+
+enum OperationType{
+  GET_TIMELINE = 1;
+  PUBLISH = 2;
+  ACK = 3;
+}
+
+message TimelinePost{
+  required int32 id = 1;
+  required string content = 2;
+  required string timestamp = 3;
+}
+
+message Operation{
+  required OperationType type = 1;
+  optional string username = 2;
+  optional int32 nr_messages = 3;
+  repeated TimelinePost timeline = 4;
+}
+
+message OperationReply{
+  required OperationType type = 1;
+  repeated TimelinePost timeline = 2;
+}

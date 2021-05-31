@@ -1,2 +1,5 @@
 kademlia
 pyyaml
+ntplib
+termcolor
+protobuf

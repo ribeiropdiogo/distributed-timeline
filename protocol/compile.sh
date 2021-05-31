@@ -1,0 +1,1 @@
+protoc -I . --python_out . protocol.proto

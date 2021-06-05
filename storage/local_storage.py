@@ -26,7 +26,8 @@ def __importData(path_to_file):
 def read_data(path_to_file):
     data = __importData(path_to_file)
     if data:
-        return data['timeline'], data['following']
+        print(data[0].get('timeline'))
+        return data[0].get('timeline'),data[1].get('following')
     else:
         return [], []
 

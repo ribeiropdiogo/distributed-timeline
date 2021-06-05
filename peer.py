@@ -63,7 +63,7 @@ def main():
 
     if username != "bootstrap":
         # read the data from the local storage
-        # (timeline, following) = local_storage.read_data(f'database/{username}.yaml')
+        (timeline,following) = local_storage.read_data(f'database/{username}.yaml')
 
         if (timeline, following) != ([], []):
             print("> The imported data was:")
@@ -84,7 +84,7 @@ def main():
         # TODO
         # Recover from reboot, iterate through followings and ask for timeline
         if following:
-            print()
+            async_tasks.get_followed_timelines(server,username,following,loop,True)
 
         # Initialize User in DHT
         loop.run_until_complete(insertUserDHT(server, username, tcp_port))

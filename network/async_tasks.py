@@ -9,6 +9,32 @@ from network import communication
 DEBUG = True
 
 
+def sortFeed(e):
+    e['id']
+
+
+def printMessage(message):
+    print(colored(message['username'], 'blue'), end=" ")
+    print(colored(message['timestamp'], 'red'))
+    print(colored(message['content'], 'green'))
+    print('\n', end="")
+
+
+def printFeed(timeline, following, user):
+    toPrint = []
+    for t in timeline:
+        t['username'] = user
+        # t.user=user
+        toPrint.append(t)
+    for f in following:
+        for ti in f['timeline']:
+            ti['username'] = f['username']
+            toPrint.append(ti)
+    toPrint.sort(reverse=True, key=lambda item: item.get("timestamp"))
+    for m in toPrint:
+        printMessage(m)
+
+
 @asyncio.coroutine
 def task(server, loop, username, tcp_connection, timeline, following, queue):
     interface.printMenu()
@@ -35,21 +61,22 @@ def task(server, loop, username, tcp_connection, timeline, following, queue):
                 # Get Content to Publish
                 content_to_publish = yield from queue.get()
                 # Publish Content Function
-                asyncio.create_task(communication.publish(server, username, timeline, content_to_publish))
+                asyncio.create_task(communication.publish(
+                    server, username, timeline, content_to_publish))
             elif option == '3':
                 os.system('cls' if os.name == 'nt' else 'clear')
-                result = get_followed_timelines(server, username, following, loop)
+                result = get_followed_timelines(
+                    server, username, following, loop,False)
                 if result:
                     interface.feedHeader()
-                interface.printMenu()
+                    printFeed(timeline, following, username)
                 # Show Feed Function
         except Exception:
             pass
 
     loop.call_soon_threadsafe(loop.stop)
 
-
-def get_followed_timelines(server, username, following, loop):
+def get_followed_timelines(server, username, following, loop, reboot):
     if not following:
         print(colored('> You are not following anyone...\n', 'red'))
         return False
@@ -60,6 +87,12 @@ def get_followed_timelines(server, username, following, loop):
     for user in following:
         following_username = user.get('username')
         if DEBUG:
-            print(colored(f'> Trying to update the user {following_username} timeline...', 'blue'))
-        loop.run_until_complete(communication.get_timeline(server, username, following, following_username))
+            print(colored(
+                f'> Trying to update the user {following_username} timeline...', 'blue'))
+        if (not reboot):
+            asyncio.create_task(communication.get_timeline(
+                server, username, following, following_username))
+        else:
+            loop.run_until_complete(communication.get_timeline(
+                server, username, following, following_username))
     return True

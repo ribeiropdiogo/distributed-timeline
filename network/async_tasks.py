@@ -8,11 +8,6 @@ from network import communication
 
 DEBUG = True
 
-
-def sortFeed(e):
-    e['id']
-
-
 def printMessage(message):
     print(colored(message['username'], 'blue'), end=" ")
     print(colored(message['timestamp'], 'red'))
@@ -24,7 +19,6 @@ def printFeed(timeline, following, user):
     toPrint = []
     for t in timeline:
         t['username'] = user
-        # t.user=user
         toPrint.append(t)
     for f in following:
         for ti in f['timeline']:

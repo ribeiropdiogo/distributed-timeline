@@ -1,4 +1,3 @@
-import argparse
 import logging
 import asyncio
 
@@ -6,6 +5,7 @@ from kademlia.network import Server
 
 DEBUG = False
 BOOTSTRAP_NODE = 8468
+
 
 def start_node(args):
     handler = logging.StreamHandler()
@@ -31,4 +31,4 @@ def start_node(args):
     else:
         loop.run_until_complete(server.listen(BOOTSTRAP_NODE))
 
-    return (server,loop)
+    return server, loop

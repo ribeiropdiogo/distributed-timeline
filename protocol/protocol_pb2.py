@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto2',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x0eprotocol.proto\x12\x08protocol\">\n\x0cTimelinePost\x12\n\n\x02id\x18\x01 \x02(\x05\x12\x0f\n\x07\x63ontent\x18\x02 \x02(\t\x12\x11\n\ttimestamp\x18\x03 \x02(\t\"\x83\x01\n\tOperation\x12%\n\x04type\x18\x01 \x02(\x0e\x32\x17.protocol.OperationType\x12\x10\n\x08username\x18\x02 \x01(\t\x12\x13\n\x0bnr_messages\x18\x03 \x01(\x05\x12(\n\x08timeline\x18\x04 \x03(\x0b\x32\x16.protocol.TimelinePost\"a\n\x0eOperationReply\x12%\n\x04type\x18\x01 \x02(\x0e\x32\x17.protocol.OperationType\x12(\n\x08timeline\x18\x02 \x03(\x0b\x32\x16.protocol.TimelinePost*7\n\rOperationType\x12\x10\n\x0cGET_TIMELINE\x10\x01\x12\x0b\n\x07PUBLISH\x10\x02\x12\x07\n\x03\x41\x43K\x10\x03'
+  serialized_pb=b'\n\x0eprotocol.proto\x12\x08protocol\">\n\x0cTimelinePost\x12\n\n\x02id\x18\x01 \x02(\x05\x12\x0f\n\x07\x63ontent\x18\x02 \x02(\t\x12\x11\n\ttimestamp\x18\x03 \x02(\t\"\x83\x01\n\tOperation\x12%\n\x04type\x18\x01 \x02(\x0e\x32\x17.protocol.OperationType\x12\x10\n\x08username\x18\x02 \x01(\t\x12\x13\n\x0bnr_messages\x18\x03 \x01(\x05\x12(\n\x08timeline\x18\x04 \x03(\x0b\x32\x16.protocol.TimelinePost\"s\n\x0eOperationReply\x12%\n\x04type\x18\x01 \x02(\x0e\x32\x17.protocol.OperationType\x12\x10\n\x08username\x18\x02 \x02(\t\x12(\n\x08timeline\x18\x03 \x03(\x0b\x32\x16.protocol.TimelinePost*7\n\rOperationType\x12\x10\n\x0cGET_TIMELINE\x10\x01\x12\x0b\n\x07PUBLISH\x10\x02\x12\x07\n\x03\x41\x43K\x10\x03'
 )
 
 _OPERATIONTYPE = _descriptor.EnumDescriptor(
@@ -48,8 +48,8 @@ _OPERATIONTYPE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=325,
-  serialized_end=380,
+  serialized_start=343,
+  serialized_end=398,
 )
 _sym_db.RegisterEnumDescriptor(_OPERATIONTYPE)
 
@@ -175,8 +175,15 @@ _OPERATIONREPLY = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='timeline', full_name='protocol.OperationReply.timeline', index=1,
-      number=2, type=11, cpp_type=10, label=3,
+      name='username', full_name='protocol.OperationReply.username', index=1,
+      number=2, type=9, cpp_type=9, label=2,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='timeline', full_name='protocol.OperationReply.timeline', index=2,
+      number=3, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -194,7 +201,7 @@ _OPERATIONREPLY = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=226,
-  serialized_end=323,
+  serialized_end=341,
 )
 
 _OPERATION.fields_by_name['type'].enum_type = _OPERATIONTYPE

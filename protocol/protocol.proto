@@ -23,5 +23,6 @@ message Operation{
 
 message OperationReply{
   required OperationType type = 1;
-  repeated TimelinePost timeline = 2;
+  required string username = 2;
+  repeated TimelinePost timeline = 3;
 }

@@ -1,4 +1,3 @@
-
 def printMenu():
     print("------- Menu -------")
     print("1: Follow User")
@@ -7,11 +6,14 @@ def printMenu():
     print("exit: Quit")
     print("--------------------")
 
+
 def followUser():
     print("Insert Username:")
 
+
 def publishContent():
     print("Insert Publication Text:")
+
 
 def feedHeader():
     print("------- Feed -------")

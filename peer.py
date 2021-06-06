@@ -4,6 +4,7 @@ import asyncio
 from termcolor import colored
 
 from network.TCPConnection import TCPConnection
+from network import communication
 import sys
 from network import node, async_tasks, dhtUserInfo
 from storage import local_storage
@@ -35,10 +36,10 @@ def parse_arguments():
     return parser.parse_args()
 
 
-async def insertUserDHT(server, username, port):
+async def insertUserDHT(server, username, port, max_clock):
     exists = await server.get(username)
     if exists is None:
-        user_info = dhtUserInfo.create(username, port)
+        user_info = dhtUserInfo.create(username, port, max_clock)
         await server.set(username, user_info)
     else:
         print("> User present in DHT")
@@ -63,16 +64,21 @@ def main():
 
     if username != "bootstrap":
         # read the data from the local storage
-        (timeline,following) = local_storage.read_data(f'database/{username}.yaml')
+        (timeline, saved_following) = local_storage.read_data(f'database/{username}.yaml')
 
-        if (timeline, following) != ([], []):
+        if (timeline, saved_following) != ([], []):
             print("> The imported data was:")
             print("\t- Timeline: " + str(timeline))
-            print("\t- Following: " + str(following) + "\n")
+            print("\t- Following: " + str(saved_following) + "\n")
+            for following_user in saved_following:
+                following_user['timeline'] = []
         else:
             print("> No data was imported.\n")
 
         print(colored(f'\n> Peer {username} started!\n', 'blue'))
+
+        following = []
+
         # Start connection to communicate with other nodes directly and pass to thread
         tcp_connection = TCPConnection(args.ip, tcp_port)
         thread = Thread(target=launchTCP, args=(tcp_connection, username, timeline, following))
@@ -81,13 +87,20 @@ def main():
         # User Input Handling
         loop.add_reader(sys.stdin, handle_user_input)
 
-        # TODO
-        # Recover from reboot, iterate through followings and ask for timeline
-        if following:
-            async_tasks.get_followed_timelines(server,username,following,loop,True)
-
         # Initialize User in DHT
-        loop.run_until_complete(insertUserDHT(server, username, tcp_port))
+        max_clock = 0
+        if timeline:
+            max_clock = max(timeline, key=lambda x: x['id'])['id']
+        loop.run_until_complete(insertUserDHT(server, username, tcp_port, max_clock))
+
+        # Recover from reboot, iterate through followings and ask for timeline
+        print(saved_following)
+        if saved_following:
+            for saved_following_user in saved_following:
+               loop.run_until_complete(communication.follow_user(
+                        server, username, saved_following_user['username'], following, tcp_connection
+                    )
+                )
 
         # Build CLI Menu for user to interact
         task = asyncio.run_coroutine_threadsafe(

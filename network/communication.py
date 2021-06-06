@@ -133,7 +133,7 @@ async def follow_user(server, username, user_to_follow, followings, tcp_connecti
 async def publish(server, username, timeline, content):
     # Get Time from external source
     c = ntplib.NTPClient()
-    response = c.request('pt.pool.ntp.org', version=3)
+    response = c.request('time.google.com', version=3)
     time = datetime.fromtimestamp(response.tx_time, timezone.utc)
 
     # Save to local timeline
@@ -163,10 +163,10 @@ async def publish(server, username, timeline, content):
         interface.printMenu()
         return
 
-    # Send content over tcp to some subscribers (50%)
-    n = math.ceil(len(followers) * 0.5)
+    # Send content over tcp to some subscribers (100%)
+    n = math.ceil(len(followers) * 1)
     if DEBUG:
-        print(colored("\n> Broadcasting to 50% of the followers -> " + str(n), 'green'))
+        print(colored("\n> Broadcasting to 100% of the followers -> " + str(n), 'green'))
 
     random_followers = random.sample(followers.keys(), k=n)
 

@@ -1,12 +1,12 @@
 import json
 
 
-def create(username, port):
+def create(username, port, max_clock):
     userInfo = {
         "tcp_port": port,
         "followers": {},
         "vector_clock": {
-            username: 0
+            username: max_clock
         }
     }
     return json.dumps(userInfo)

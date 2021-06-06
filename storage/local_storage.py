@@ -37,7 +37,11 @@ def read_data(path_to_file):
 
 
 def save_data(timeline, following, output_file_name):
-    dict_file = [{'timeline': timeline}, {'following': following}]
+    following_usernames = []
+    for following_info in following:
+        following_usernames.append({'username': following_info['username']})
+
+    dict_file = [{'timeline': timeline}, {'following': following_usernames}]
     with open(DATABASE_PATH + output_file_name + '.yaml', 'w') as file:
         yaml.dump(dict_file, file, sort_keys=True)
     file.close()

@@ -60,7 +60,7 @@ def task(server, loop, username, tcp_connection, timeline, following, queue):
             elif option == '3':
                 os.system('cls' if os.name == 'nt' else 'clear')
                 result = get_followed_timelines(
-                    server, username, following, loop,False)
+                    server, username, following, loop)
                 if result:
                     interface.feedHeader()
                     printFeed(timeline, following, username)
@@ -70,7 +70,7 @@ def task(server, loop, username, tcp_connection, timeline, following, queue):
 
     loop.call_soon_threadsafe(loop.stop)
 
-def get_followed_timelines(server, username, following, loop, reboot):
+def get_followed_timelines(server, username, following, loop):
     if not following:
         print(colored('> You are not following anyone...\n', 'red'))
         return False
@@ -83,10 +83,6 @@ def get_followed_timelines(server, username, following, loop, reboot):
         if DEBUG:
             print(colored(
                 f'> Trying to update the user {following_username} timeline...', 'blue'))
-        if (not reboot):
-            asyncio.create_task(communication.get_timeline(
-                server, username, following, following_username))
-        else:
-            loop.run_until_complete(communication.get_timeline(
-                server, username, following, following_username))
+        loop.run_until_complete(communication.get_timeline(
+            server, username, following, following_username))
     return True

@@ -83,6 +83,6 @@ def get_followed_timelines(server, username, following, loop):
         if DEBUG:
             print(colored(
                 f'> Trying to update the user {following_username} timeline...', 'blue'))
-        loop.run_until_complete(communication.get_timeline(
+        asyncio.create_task(communication.get_timeline(
             server, username, following, following_username))
     return True
